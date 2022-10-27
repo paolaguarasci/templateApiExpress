@@ -1,5 +1,6 @@
 import Debug from 'debug';
-import app from '../app.js';
+// @ts-ignore
+import app from '../app.ts';
 import http from 'http';
 const debug = Debug('templateapiexpress:server');
 
@@ -13,7 +14,7 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 function normalizePort(val: string) {
-  var port = parseInt(val, 10);
+  const port = parseInt(val, 10);
 
   if (isNaN(port)) {
     return val;
@@ -26,12 +27,12 @@ function normalizePort(val: string) {
   return false;
 }
 
-function onError(error: { syscall: string; code: any; }) {
+function onError(error: { syscall: string; code: string }) {
   if (error.syscall !== 'listen') {
     throw error;
   }
 
-  var bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
+  const bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
 
   switch (error.code) {
     case 'EACCES':
@@ -48,7 +49,7 @@ function onError(error: { syscall: string; code: any; }) {
 }
 
 function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr?.port;
+  const addr = server.address();
+  const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr?.port;
   debug('Listening on ' + bind);
 }

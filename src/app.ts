@@ -1,6 +1,7 @@
 import cookieParser from 'cookie-parser';
 import express from 'express'
 import { fileURLToPath } from "url";
+// @ts-ignore
 import indexRouter from './routes/index.ts'
 import morgan from 'morgan';
 import path from 'path'
