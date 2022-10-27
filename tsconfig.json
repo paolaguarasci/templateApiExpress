@@ -4,7 +4,9 @@
     "transpileOnly": true,
     "files": true,
     "esm": true,
-    "compilerOptions": {}
+    "compilerOptions": {
+      "moduleResolution": "node",
+    }
   },
   "compilerOptions": {
     "module": "ES2022",

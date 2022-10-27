@@ -1,7 +1,7 @@
 import cookieParser from 'cookie-parser';
 import express from 'express'
 import { fileURLToPath } from "url";
-import indexRouter from '../src/routes/index.js'
+import indexRouter from './routes/index.ts'
 import morgan from 'morgan';
 import path from 'path'
 const app = express();

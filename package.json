@@ -8,7 +8,9 @@
     "test": "mocha src/test"
   },
   "dependencies": {
+    "@types/cookie-parser": "^1.4.3",
     "@types/debug": "^4.1.7",
+    "@types/morgan": "^1.9.3",
     "cookie-parser": "~1.4.6",
     "debug": "~4.3.4",
     "express": ">=5.0.0-beta.1",
