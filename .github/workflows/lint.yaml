@@ -1,4 +1,4 @@
-name: Node.js CI
+name: ESLintS
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: ["dev"]
 
 jobs:
-  node:
+  lint:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -24,4 +24,4 @@ jobs:
           cache: "pnpm"
       - run: pnpm prune
       - run: pnpm install
-      - run: pnpm run test
+      - run: pnpm run lint
