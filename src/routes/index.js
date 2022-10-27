@@ -1,8 +1,9 @@
-const express = require('express');
-const router = express.Router();
+import {Router} from 'express';
 
-router.get('/', function (req, res, next) {
+const rootRouter = Router();
+
+rootRouter.get('/', function (req, res, next) {
   res.status(200).json({ message: 'Welcome', success: true });
 });
 
-module.exports = router;
+export default rootRouter;
