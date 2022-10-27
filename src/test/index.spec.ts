@@ -2,13 +2,13 @@ process.env.NODE_ENV = 'test';
 
 import 'mocha';
 
+// @ts-ignore
 import app from '../app.ts';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 
 chai.use(chaiHttp);
 chai.should();
-const expect = chai.expect;
 
 describe('GET /api/v1/', () => {
   it('It should GET welcome message', (done) => {
