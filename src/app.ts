@@ -1,10 +1,9 @@
 import cookieParser from 'cookie-parser';
-import express from 'express'
-import { fileURLToPath } from "url";
-// @ts-ignore
-import indexRouter from './routes/index.ts'
+import express from 'express';
+import { fileURLToPath } from 'url';
+import indexRouter from './routes/index.js';
 import morgan from 'morgan';
-import path from 'path'
+import path from 'path';
 const app = express();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -18,4 +17,4 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/v1', indexRouter);
 
-export default app
+export default app;
