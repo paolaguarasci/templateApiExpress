@@ -21,7 +21,6 @@ export class User {
   @Generated('uuid')
   id?: string;
 
-  constructor();
   constructor(
     username?: string,
     hash?: string,
@@ -33,7 +32,7 @@ export class User {
     if (this.username) {
       this.username = this.sanitizeAndValidateUsername(username!);
     } else {
-      this.username = '';
+      this.username = 'defaultuser';
     }
     this.hash = hash;
     this.token = token;
