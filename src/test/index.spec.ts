@@ -2,8 +2,8 @@ process.env.NODE_ENV = 'test';
 
 import 'mocha';
 
-// @ts-ignore
-import app from '../app.ts';
+
+import app from '../app.js';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 

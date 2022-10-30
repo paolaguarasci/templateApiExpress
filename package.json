@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "ts-node ./src/bin/www",
-    "test": "mocha -r ts-node/register src/**/*.spec.ts",
+    "start": "ts-node ./src/bin/www.ts",
+    "test": "mocha -r ts-node/register src/test/**/*.spec.ts",
     "lint": "eslint --fix --ext .ts src/  --config .eslintrc.cjs --ext .ts",
     "build": "tsc --pretty"
   },

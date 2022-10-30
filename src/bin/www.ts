@@ -1,6 +1,5 @@
 import Debug from 'debug';
-// @ts-ignore
-import app from '../app.ts';
+import app from '../app.js';
 import http from 'http';
 const debug = Debug('templateapiexpress:server');
 
