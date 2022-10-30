@@ -7,9 +7,21 @@ export default class UserRepository {
     this.userList = [];
   }
 
-  getAll() {}
-  getById(id: string) {}
-  create(user: User) {}
-  edit(user: User) {}
-  delete(id: string) {}
+  async getAll() {
+    return await [];
+  }
+  async getById(id: string) {
+    return await this.userList.find((user) => user.id === id);
+  }
+  async create(user: User) {
+    return await this.userList.push(user);
+  }
+  async edit(user: User) {
+    const indexToReplace = this.userList.findIndex((u) => u.id === user.id);
+    this.userList[indexToReplace] = user;
+    return this.userList[indexToReplace];
+  }
+  async delete(id: string) {
+    return await this.userList.filter((u) => u.id != id);
+  }
 }

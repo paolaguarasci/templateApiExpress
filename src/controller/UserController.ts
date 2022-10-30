@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 
 import UserService from '../service/UserService.js';
 
@@ -9,15 +9,23 @@ export default class UserController {
     this.userService = new UserService();
   }
 
-  getAll(req: Request, res: Response, next: NextFunction) {
+  getAll(req: Request, res: Response) {
     res.status(200).send({})
   }
 
-  getById(req: Request, res: Response, next: NextFunction) {}
+  getById(req: Request, res: Response) {
+    res.status(200).send({})
+  }
 
-  create(req: Request, res: Response, next: NextFunction) {}
+  create(req: Request, res: Response) {
+    res.status(200).send({})
+  }
 
-  edit(req: Request, res: Response, next: NextFunction) {}
+  edit(req: Request, res: Response) {
+    res.status(200).send({})
+  }
 
-  delete(req: Request, res: Response, next: NextFunction) {}
+  delete(req: Request, res: Response) {
+    res.status(200).send({})
+  }
 }
