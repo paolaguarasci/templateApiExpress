@@ -1,0 +1,41 @@
+###
+GET http://localhost:3000/api/v1/users
+Content-Type: application/json
+###
+
+###
+GET http://localhost:3000/api/v1/users/625c17c5-09ce-46a8-9720-39add360cbf8
+Content-Type: application/json
+###
+
+
+###
+POST http://localhost:3000/api/v1/users/
+Content-Type: application/json
+
+{
+  "username": "userName",
+  "hash": "-",
+  "token": "-",
+  "role": "1"
+}
+
+###
+
+###
+PUT http://localhost:3000/api/v1/users/625c17c5-09ce-46a8-9720-39add360cbf8
+Content-Type: application/json
+
+{
+  "id": "625c17c5-09ce-46a8-9720-39add360cbf8",
+  "username": "utonto",
+  "hash": "-",
+  "token": "-",
+  "role": "3"
+}
+###
+
+###
+DELETE http://localhost:3000/api/v1/users/85550316-1e94-42a7-b72b-eae2a9ab8059
+Content-Type: application/json
+###

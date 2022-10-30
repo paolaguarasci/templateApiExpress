@@ -1,27 +1,32 @@
+import { AppDataSource } from '../config/dataSource.js';
 import { User } from '../model/User.js';
+export class UserRepository {
+  userList: User[] = [];
 
-export default class UserRepository {
-  userList: User[];
+  public getAll = async () => {
+    return await AppDataSource.getRepository(User).find();
+  };
 
-  constructor() {
-    this.userList = [];
-  }
+  public getById = async (id: string) => {
+    return await AppDataSource.getRepository(User).findOneBy({ id: id });
+  };
 
-  async getAll() {
-    return await [];
-  }
-  async getById(id: string) {
-    return await this.userList.find((user) => user.id === id);
-  }
-  async create(user: User) {
-    return await this.userList.push(user);
-  }
-  async edit(user: User) {
-    const indexToReplace = this.userList.findIndex((u) => u.id === user.id);
-    this.userList[indexToReplace] = user;
-    return this.userList[indexToReplace];
-  }
-  async delete(id: string) {
-    return await this.userList.filter((u) => u.id != id);
-  }
+  public create = async (user: User) => {
+    const newUser = await AppDataSource.getRepository(User).create(user);
+    return await AppDataSource.getRepository(User).save(newUser);
+  };
+
+  public edit = async (id: string, user: User) => {
+ console.log("user ", user);
+    const userFromDB = await AppDataSource.getRepository(User).findOneBy({
+      id: id
+    });
+    if (userFromDB === null) throw new Error('User not present');
+    AppDataSource.getRepository(User).merge(userFromDB, user);
+    return await AppDataSource.getRepository(User).save(user);
+  };
+
+  public delete = async (id: string) => {
+    return await AppDataSource.getRepository(User).delete(id);
+  };
 }
