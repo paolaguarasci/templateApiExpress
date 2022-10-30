@@ -10,23 +10,23 @@ export class UserController {
   }
 
   public getAll = async (req: Request, res: Response) => {
-    let response = await this.userService.getAll();
+    const response = await this.userService.getAll();
     res.status(200).send(response);
   };
 
   public getById = async (req: Request, res: Response) => {
-    let response = await this.userService.getById(req.params.id);
+    const response = await this.userService.getById(req.params.id);
     res.status(200).send(response);
   };
 
   public create = async (req: Request, res: Response) => {
     console.log(req.body);
-    let response = await this.userService.create(req.body);
+    const response = await this.userService.create(req.body);
     res.status(200).send(response);
   };
 
   public edit = async (req: Request, res: Response) => {
-    let response = await this.userService.edit(req.params.id, req.body);
+    const response = await this.userService.edit(req.params.id, req.body);
     res.status(200).send(response);
   };
 
