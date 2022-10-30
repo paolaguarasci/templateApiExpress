@@ -8,11 +8,11 @@ export class User {
   role: RoleType;
 
   constructor(
-    id: string,
     username: string,
     hash: string,
     token: string,
-    role: RoleType
+    role: RoleType,
+    id?: string
   ) {
     this.id = id;
     this.username = this.sanitizeAndValidateUsername(username);
