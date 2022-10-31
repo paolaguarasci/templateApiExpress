@@ -1,1 +1,54 @@
-export class User {}
+import { Column, Entity, Generated, PrimaryColumn } from 'typeorm';
+
+export enum RoleType {
+  Admin,
+  Editor,
+  User
+}
+
+@Entity()
+export class User {
+  @Column()
+  username?: string;
+  @Column()
+  hash?: string;
+  @Column()
+  token?: string;
+  @Column({
+    type: 'enum',
+    enum: RoleType,
+    default: RoleType.User
+  })
+  role?: RoleType;
+
+  @PrimaryColumn()
+  @Generated('uuid')
+  id?: string;
+
+  constructor(
+    username?: string,
+    hash?: string,
+    token?: string,
+    role?: RoleType,
+    id?: string
+  ) {
+    this.id = id;
+    if (this.username) {
+      this.username = this.sanitizeAndValidateUsername(username!);
+    } else {
+      this.username = 'defaultuser';
+    }
+    this.hash = hash;
+    this.token = token;
+    this.role = role;
+  }
+
+  private sanitizeAndValidateUsername(username: string): string {
+    username = username.trim();
+    const usernameRegExp = /^[A-Za-z0-9_]{8,16}$/;
+    if (username.length < 8 || username.length > 16)
+      throw new Error('Username invalid');
+    if (!usernameRegExp.test(username)) throw new Error('Username invalid');
+    return username;
+  }
+}
