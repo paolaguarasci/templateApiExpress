@@ -1,31 +1,41 @@
 import { Request, Response } from 'express';
 
-import UserService from '../service/UserService.js';
+import { UserService } from '../service/UserService.js';
 
-export default class UserController {
-  userService: UserService;
+export class UserController {
+  private userService: UserService;
 
   constructor() {
     this.userService = new UserService();
   }
 
-  getAll(req: Request, res: Response) {
-    res.status(200).send({})
-  }
+  public getAll = async (req: Request, res: Response) => {
+    const response = await this.userService.getAll();
+    res.status(200).send(response);
+  };
 
-  getById(req: Request, res: Response) {
-    res.status(200).send({})
-  }
+  public getById = async (req: Request, res: Response) => {
+    const response = await this.userService.getById(req.params.id);
+    res.status(200).send(response);
+  };
 
-  create(req: Request, res: Response) {
-    res.status(200).send({})
-  }
+  public create = async (req: Request, res: Response) => {
+    console.log(req.body);
+    const response = await this.userService.create(req.body);
+    res.status(200).send(response);
+  };
 
-  edit(req: Request, res: Response) {
-    res.status(200).send({})
-  }
+  public edit = async (req: Request, res: Response) => {
+    const response = await this.userService.edit(req.params.id, req.body);
+    res.status(200).send(response);
+  };
 
-  delete(req: Request, res: Response) {
-    res.status(200).send({})
-  }
+  public delete = async (req: Request, res: Response) => {
+    try {
+      await this.userService.delete(req.params.id);
+      res.status(204).json({ message: 'Ok' });
+    } catch (e) {
+      res.status(404).json({ message: 'error' });
+    }
+  };
 }

@@ -1,21 +1,39 @@
-import { RoleType } from './RoleType';
+import { Column, Entity, Generated, PrimaryColumn } from 'typeorm';
 
+import { RoleType } from './RoleType.js';
+
+@Entity()
 export class User {
-  readonly id?: string;
-  readonly username: string;
-  hash: string;
-  token: string;
-  role: RoleType;
+  @Column()
+  username?: string;
+  @Column()
+  hash?: string;
+  @Column()
+  token?: string;
+  @Column({
+    type: 'enum',
+    enum: RoleType,
+    default: RoleType.User
+  })
+  role?: RoleType;
+
+  @PrimaryColumn()
+  @Generated('uuid')
+  id?: string;
 
   constructor(
-    username: string,
-    hash: string,
-    token: string,
-    role: RoleType,
+    username?: string,
+    hash?: string,
+    token?: string,
+    role?: RoleType,
     id?: string
   ) {
     this.id = id;
-    this.username = this.sanitizeAndValidateUsername(username);
+    if (this.username) {
+      this.username = this.sanitizeAndValidateUsername(username!);
+    } else {
+      this.username = 'defaultuser';
+    }
     this.hash = hash;
     this.token = token;
     this.role = role;
