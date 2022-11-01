@@ -1,9 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { User, UserType } from './entities/user.entity';
 
-import { CreateUserDto } from './dto/create-user.dto';
-import { GetUserDTO } from './dto/get-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
 
 describe('UsersService', () => {
@@ -32,7 +29,7 @@ describe('UsersService', () => {
 
   describe('findAll', () => {
     it('should return an array of users', async () => {
-      let users = await service.findAll();
+      const users = await service.findAll();
       expect(users).toMatchObject(userList);
     });
 
@@ -57,8 +54,8 @@ describe('UsersService', () => {
 
   describe('create', () => {
     it('should return a created user', async () => {
-      let newUserObj = { username: 'ciaociao', password: 'PaolettA.85@#' };
-      let newUser = new User('4', newUserObj.username, newUserObj.password);
+      const newUserObj = { username: 'ciaociao', password: 'PaolettA.85@#' };
+      const newUser = new User('4', newUserObj.username, newUserObj.password);
       expect(
         await service.create(newUserObj.username, newUserObj.password),
       ).toStrictEqual(newUser);

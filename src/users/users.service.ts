@@ -1,8 +1,6 @@
 import { User, UserType } from './entities/user.entity';
 
-import { CreateUserDto } from './dto/create-user.dto';
 import { Injectable } from '@nestjs/common';
-import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -23,7 +21,7 @@ export class UsersService {
   }
 
   findAll(): User[] {
-    return this.userList
+    return this.userList;
   }
 
   findOne(id: string): User {
@@ -47,7 +45,7 @@ export class UsersService {
     return newUser;
   }
 
-  update(id: string, obj: any): User {    
+  update(id: string, obj: any): User {
     const indexUserToUpdate = this.userList.findIndex((user) => user.id === id);
     const userToUpdate: User = this.userList[indexUserToUpdate];
 
@@ -79,14 +77,14 @@ export class UsersService {
     try {
       this.findOne(id);
       this.userList = this.userList.filter((user) => user.id != id);
-    } catch(err) {
+    } catch (err) {
       throw err;
     }
   }
 
   private findNextUserID(): string {
-    let lastID = this.userList[this.userList.length - 1].id;
-    let nextID = parseInt(lastID, 10) + 1;
+    const lastID = this.userList[this.userList.length - 1].id;
+    const nextID = parseInt(lastID, 10) + 1;
     return '' + nextID;
   }
 }

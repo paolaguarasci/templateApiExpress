@@ -116,9 +116,7 @@ describe('UsersController', () => {
       jest.spyOn(service, 'remove').mockImplementation(() => {
         throw new Error('User not present');
       });
-      expect(() =>
-        controller.remove("123"),
-      ).toThrowError(HttpException);
+      expect(() => controller.remove('123')).toThrowError(HttpException);
     });
   });
 });
