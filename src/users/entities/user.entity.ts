@@ -1,54 +1,44 @@
-import { Column, Entity, Generated, PrimaryColumn } from 'typeorm';
-
-export enum RoleType {
-  Admin,
-  Editor,
-  User
+export enum UserType {
+  ADMIN = 'ADMIN',
+  EDITOR = 'EDITOR',
+  BASE = 'BASE',
 }
-
-@Entity()
 export class User {
-  @Column()
-  username?: string;
-  @Column()
-  hash?: string;
-  @Column()
+  readonly id: string;
+  username: string;
+  hash: string;
+  role: UserType;
   token?: string;
-  @Column({
-    type: 'enum',
-    enum: RoleType,
-    default: RoleType.User
-  })
-  role?: RoleType;
+  tokenToRenew?: string;
 
-  @PrimaryColumn()
-  @Generated('uuid')
-  id?: string;
-
-  constructor(
-    username?: string,
-    hash?: string,
-    token?: string,
-    role?: RoleType,
-    id?: string
-  ) {
+  constructor(id: string, username: string, password: string, role?: UserType) {
     this.id = id;
-    if (this.username) {
-      this.username = this.sanitizeAndValidateUsername(username!);
-    } else {
-      this.username = 'defaultuser';
-    }
-    this.hash = hash;
-    this.token = token;
-    this.role = role;
+    this.username = username;
+    this.hash = this.createHashPassword(password);
+    this.role = role ?? UserType.BASE;
   }
 
-  private sanitizeAndValidateUsername(username: string): string {
-    username = username.trim();
-    const usernameRegExp = /^[A-Za-z0-9_]{8,16}$/;
-    if (username.length < 8 || username.length > 16)
-      throw new Error('Username invalid');
-    if (!usernameRegExp.test(username)) throw new Error('Username invalid');
+  changePassword(password: string): void {
+    this.hash = this.createHashPassword(password);
+  }
+
+  createHashPassword(password: string): string {
+    // TODO
+    return password + "-hashed";
+  }
+
+  checkPassword(candidatePassword: string): boolean {
+    // TODO
+    return true;
+  }
+
+  sanitizeUsername(username: string): string {
+    // TODO
     return username;
+  }
+
+  validateUsername(username: string): boolean {
+    // TODO
+    return true;
   }
 }
