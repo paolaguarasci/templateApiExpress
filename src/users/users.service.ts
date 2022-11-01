@@ -33,6 +33,15 @@ export class UsersService {
     }
   }
 
+  findOneByUsername(username: string): User {
+    const user = this.userList.find((user) => user.username === username);
+    if (user) {
+      return user;
+    } else {
+      throw new Error('User not present');
+    }
+  }
+
   create(username: string, password: string): User {
     const lastUserID: string = this.findNextUserID();
 
