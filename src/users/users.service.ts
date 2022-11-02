@@ -6,14 +6,15 @@ import { Injectable } from '@nestjs/common';
 export class UsersService {
   userList: User[] = [];
   constructor() {
-    const user1 = new User('1', 'paola-admin', 'PaolettA.85@#', UserType.ADMIN);
-    const user2 = new User(
-      '2',
-      'giuseppe-aditor',
-      'PaolettA.85@#',
+    const user1 = new User('1', 'paola-admin', 'PaolettA.85@#', [
+      UserType.ADMIN,
+    ]);
+    const user2 = new User('2', 'giuseppe-aditor', 'PaolettA.85@#', [
       UserType.EDITOR,
-    );
-    const user3 = new User('3', 'nicola-user', 'PaolettA.85@#', UserType.BASE);
+    ]);
+    const user3 = new User('3', 'nicola-user', 'PaolettA.85@#', [
+      UserType.BASE,
+    ]);
 
     this.userList.push(user1);
     this.userList.push(user2);
@@ -67,7 +68,7 @@ export class UsersService {
     }
 
     if (obj.role) {
-      userToUpdate.role = obj.role;
+      userToUpdate.roles = obj.roles;
     }
 
     if (obj.token) {

@@ -7,15 +7,20 @@ export class User {
   id: string;
   username: string;
   hash: string;
-  role: UserType;
+  roles: UserType[];
   token?: string;
   tokenToRenew?: string;
 
-  constructor(id: string, username: string, password: string, role?: UserType) {
+  constructor(
+    id: string,
+    username: string,
+    password: string,
+    roles?: UserType[],
+  ) {
     this.id = id;
     this.username = username;
     this.hash = this.createHashPassword(password);
-    this.role = role ?? UserType.BASE;
+    this.roles = roles ?? [UserType.BASE];
   }
 
   changePassword(password: string): void {

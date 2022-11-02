@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
@@ -14,7 +14,7 @@ export class AuthService {
     try {
       const user = await this.usersService.findOneByUsername(username);
       if (user.checkPassword(pass)) {
-        const { hash, ...result } = user;
+        const { hash, ...result } = user; // eslint-disable-line @typescript-eslint/no-unused-vars
         return result;
       }
       return null;

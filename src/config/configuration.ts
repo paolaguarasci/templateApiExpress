@@ -6,9 +6,9 @@ import { readFileSync } from 'fs';
 const YAML_CONFIG_FILENAME = '../config.yaml';
 
 export default () => {
-  let config =  yaml.load(
+  const config = yaml.load(
     readFileSync(join(__dirname, YAML_CONFIG_FILENAME), 'utf8'),
-    ) as Record<string, any>;
-  console.log("config ", config);
+  ) as Record<string, any>;
+  console.log('config ', config);
   return config;
 };

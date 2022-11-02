@@ -12,8 +12,9 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
+import { User, UserType } from './entities/user.entity';
 import { GetUserDTO } from './dto/get-user.dto';
+import { Roles } from '../auth/role.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -40,6 +41,7 @@ export class UsersController {
   }
 
   @Post()
+  @Roles(UserType.ADMIN)
   create(@Body() createUserDto: CreateUserDto): GetUserDTO {
     try {
       return this.mapperUserToDTO(
@@ -95,7 +97,7 @@ export class UsersController {
     return new GetUserDTO(
       user.id,
       user.username,
-      user.role,
+      user.roles,
       user.token,
       user.tokenToRenew,
     );

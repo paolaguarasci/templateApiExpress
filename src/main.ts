@@ -1,6 +1,6 @@
 import { AppModule } from './app.module';
 import { NestFactory } from '@nestjs/core';
-import helmet from 'helmet'
+import helmet from 'helmet';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(helmet());

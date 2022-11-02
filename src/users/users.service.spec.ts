@@ -7,9 +7,9 @@ describe('UsersService', () => {
   let service: UsersService;
 
   const userList: User[] = [
-    new User('1', 'paola-admin', 'PaolettA.85@#', UserType.ADMIN),
-    new User('2', 'giuseppe-aditor', 'PaolettA.85@#', UserType.EDITOR),
-    new User('3', 'nicola-user', 'PaolettA.85@#', UserType.BASE),
+    new User('1', 'paola-admin', 'PaolettA.85@#', [UserType.ADMIN]),
+    new User('2', 'giuseppe-aditor', 'PaolettA.85@#', [UserType.EDITOR]),
+    new User('3', 'nicola-user', 'PaolettA.85@#', [UserType.BASE]),
   ];
 
   const rightUsername = 'paola-admin';
@@ -75,16 +75,13 @@ describe('UsersService', () => {
 
   describe('update', () => {
     it('should return an update user', async () => {
-      const user = new User(
-        '1',
-        'paola-admin',
-        'PaolettA.85@#',
+      const user = new User('1', 'paola-admin', 'PaolettA.85@#', [
         UserType.ADMIN,
-      );
+      ]);
       expect(
         await service.update(user.id, { username: 'paola-super-admin' }),
       ).toMatchObject(
-        new User(user.id, 'paola-super-admin', 'PaolettA.85@#', user.role),
+        new User(user.id, 'paola-super-admin', 'PaolettA.85@#', user.roles),
       );
     });
 
@@ -93,7 +90,7 @@ describe('UsersService', () => {
       expect(
         await service.update(user.id, { password: 'Ciaone.123#$%' }),
       ).toMatchObject(
-        new User(user.id, user.username, 'Ciaone.123#$%', user.role),
+        new User(user.id, user.username, 'Ciaone.123#$%', user.roles),
       );
     });
   });

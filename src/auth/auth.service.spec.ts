@@ -16,9 +16,9 @@ describe('AuthService', () => {
   let service: AuthService;
   let usersService: UsersService;
   const userList: User[] = [
-    new User('1', 'paola-admin', 'PaolettA.85@#', UserType.ADMIN),
-    new User('2', 'giuseppe-aditor', 'PaolettA.85@#', UserType.EDITOR),
-    new User('3', 'nicola-user', 'PaolettA.85@#', UserType.BASE),
+    new User('1', 'paola-admin', 'PaolettA.85@#', [UserType.ADMIN]),
+    new User('2', 'giuseppe-aditor', 'PaolettA.85@#', [UserType.EDITOR]),
+    new User('3', 'nicola-user', 'PaolettA.85@#', [UserType.BASE]),
   ];
 
   beforeEach(async () => {
@@ -48,7 +48,7 @@ describe('AuthService', () => {
       jest
         .spyOn(usersService, 'findOneByUsername')
         .mockReturnValue(userList[0]);
-      let { hash, ...result } = userList[0];
+      const { hash, ...result } = userList[0]; // eslint-disable-line @typescript-eslint/no-unused-vars
       expect(
         await service.validateUser(userList[0].username, 'PaolettA.85@#'),
       ).toStrictEqual(result);
@@ -61,7 +61,7 @@ describe('AuthService', () => {
 
     it('should throw error when username are invalid', async () => {
       await expect(async () => {
-        await service.validateUser('xxx', 'xxx')
+        await service.validateUser('xxx', 'xxx');
       }).rejects.toThrowError(UnauthorizedException);
     });
   });
