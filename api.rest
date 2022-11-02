@@ -48,5 +48,5 @@ Content-Type: application/json
 ### 
 GET http://localhost:3000/profile
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhb2xhLWFkbWluIiwiaWF0IjoxNjY3MzE3NTQ2LCJleHAiOjE2NjczMTc2MDZ9.GdcAfDwxBCVOx2OmKrcth1x465OYVW4hDXEA_kig7YE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhb2xhLWFkbWluIiwiaWF0IjoxNjY3MzcwODkxLCJleHAiOjE2NjczNzA5NTF9.-ghJF15qFSYtph9XHtuBUoKxPsX4OkH36Glfcyk4t5w
 ### 

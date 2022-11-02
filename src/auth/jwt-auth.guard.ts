@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 
 import { AuthGuard } from '@nestjs/passport';
-import { IS_PUBLIC_KEY } from 'src/app.decorator';
+import { IS_PUBLIC_KEY } from '../app.decorator';
 import { Observable } from 'rxjs';
 import { Reflector } from '@nestjs/core';
 

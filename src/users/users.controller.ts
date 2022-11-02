@@ -14,7 +14,6 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { GetUserDTO } from './dto/get-user.dto';
-import { Public } from 'src/app.decorator';
 
 @Controller('users')
 export class UsersController {

@@ -1,0 +1,17 @@
+# copy in src/config.yaml
+http:
+  host: localhost
+  port: 8080
+
+db:
+  mariadb:
+    url: localhost
+    port: 3306
+    database: templateApiDev
+    user:
+    password:
+
+  sqlite:
+    database: sqlite.db
+jwt:
+  secret:

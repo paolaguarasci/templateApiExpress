@@ -23,14 +23,16 @@ export class User {
   }
 
   createHashPassword(password: string): string {
-    // TODO
-    return password + '-hashed';
+    return this.hashString(password);
   }
 
   checkPassword(candidatePassword: string): boolean {
+    return this.hashString(candidatePassword) === this.hash;
+  }
+
+  private hashString(value: string): string {
     // TODO
-    console.log(candidatePassword);
-    return true;
+    return value + '-hashed';
   }
 
   sanitizeUsername(username: string): string {
