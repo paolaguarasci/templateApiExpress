@@ -12,8 +12,9 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
+import { User, UserType } from './entities/user.entity';
 import { GetUserDTO } from './dto/get-user.dto';
+import { Roles } from '../auth/role.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -40,14 +41,14 @@ export class UsersController {
   }
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto): GetUserDTO {
+  @Roles(UserType.ADMIN)
+  async create(@Body() createUserDto: CreateUserDto): Promise<GetUserDTO> {
     try {
-      return this.mapperUserToDTO(
-        this.usersService.create(
-          createUserDto.username,
-          createUserDto.password,
-        ),
+      const users = await this.usersService.create(
+        createUserDto.username,
+        createUserDto.password,
       );
+      return this.mapperUserToDTO(users);
     } catch (err) {
       throw new HttpException(
         {
@@ -60,16 +61,15 @@ export class UsersController {
   }
 
   @Put(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
-  ): GetUserDTO {
-    return this.mapperUserToDTO(
-      this.usersService.update(id, {
-        username: updateUserDto.username,
-        password: updateUserDto.password,
-      }),
-    );
+  ): Promise<GetUserDTO> {
+    const user = await this.usersService.update(id, {
+      username: updateUserDto.username,
+      password: updateUserDto.password,
+    });
+    return this.mapperUserToDTO(user);
   }
 
   @Delete(':id')
@@ -95,7 +95,7 @@ export class UsersController {
     return new GetUserDTO(
       user.id,
       user.username,
-      user.role,
+      user.roles,
       user.token,
       user.tokenToRenew,
     );

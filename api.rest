@@ -39,3 +39,36 @@ Content-Type: application/json
 DELETE http://localhost:3000/api/v1/users/85550316-1e94-42a7-b72b-eae2a9ab8059
 Content-Type: application/json
 ###
+# @name login
+POST http://localhost:3000/auth/login 
+Content-Type: application/json
+
+{"username": "paola-admin", "password": "PaolettA.85@#"}
+
+###
+# @name login
+POST http://localhost:3000/auth/login 
+Content-Type: application/json
+
+{"username": "nicola-user", "password": "PaolettA.85@#"}
+###
+
+@authToken = {{login.response.body.token}}
+
+### 
+GET http://localhost:3000/profile
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+###
+GET http://localhost:3000/users/
+Authorization: Bearer {{authToken}}
+### 
+
+POST http://localhost:3000/users/
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{"username": "paola-admin12", "password": "PaolettA.85@#"}
+
+###
