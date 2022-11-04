@@ -1,24 +1,39 @@
 import { User, UserType } from './entities/user.entity';
 
 import { Injectable } from '@nestjs/common';
+import { UserBuilder } from './entities/UserBuilder';
+import { UserDirector } from './entities/UserDirector';
 
 @Injectable()
 export class UsersService {
   userList: User[] = [];
-  constructor() {
-    const user1 = new User('1', 'paola-admin', 'PaolettA.85@#', [
+  constructor(
+    private userBuilder: UserBuilder,
+    private userDirector: UserDirector,
+  ) {}
+
+  async init() {
+    this.userDirector.setBuilder(this.userBuilder);
+
+    await this.userDirector.buildNewUser('1', 'paola-admin', 'PaolettA.85@#', [
       UserType.ADMIN,
     ]);
-    const user2 = new User('2', 'giuseppe-aditor', 'PaolettA.85@#', [
-      UserType.EDITOR,
-    ]);
-    const user3 = new User('3', 'nicola-user', 'PaolettA.85@#', [
+    const user1 = this.userBuilder.getUser();
+
+    await this.userDirector.buildNewUser(
+      '2',
+      'giuseppe-editor',
+      'PaolettA.85@#',
+      [UserType.EDITOR],
+    );
+    const user2 = this.userBuilder.getUser();
+
+    await this.userDirector.buildNewUser('3', 'nicola-user', 'PaolettA.85@#', [
       UserType.BASE,
     ]);
+    const user3 = this.userBuilder.getUser();
 
-    this.userList.push(user1);
-    this.userList.push(user2);
-    this.userList.push(user3);
+    this.userList = [user1, user2, user3];
   }
 
   findAll(): User[] {
@@ -43,19 +58,23 @@ export class UsersService {
     }
   }
 
-  create(username: string, password: string): User {
+  async create(username: string, password: string): Promise<User> {
     const lastUserID: string = this.findNextUserID();
 
-    if (this.userList.find((user) => user.username === username) != undefined) {
+    const userDB: User | undefined = this.userList.find(
+      (user) => user.username === username,
+    );
+
+    if (userDB != undefined) {
       throw new Error('User already present');
     }
-
-    const newUser = new User(lastUserID, username, password);
+    await this.userDirector.buildNewUser(lastUserID, username, password);
+    const newUser = this.userBuilder.getUser();
     this.userList.push(newUser);
     return newUser;
   }
 
-  update(id: string, obj: any): User {
+  async update(id: string, obj: any): Promise<User> {
     const indexUserToUpdate = this.userList.findIndex((user) => user.id === id);
     const userToUpdate: User = this.userList[indexUserToUpdate];
 
@@ -64,7 +83,7 @@ export class UsersService {
     }
 
     if (obj.password) {
-      userToUpdate.changePassword(obj.password);
+      await userToUpdate.changePassword(obj.password);
     }
 
     if (obj.role) {

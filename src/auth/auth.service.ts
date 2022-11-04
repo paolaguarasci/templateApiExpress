@@ -13,7 +13,7 @@ export class AuthService {
   async validateUser(username: string, pass: string): Promise<any> {
     try {
       const user = await this.usersService.findOneByUsername(username);
-      if (user.checkPassword(pass)) {
+      if (await user.checkPassword(pass)) {
         const { hash, ...result } = user; // eslint-disable-line @typescript-eslint/no-unused-vars
         return result;
       }

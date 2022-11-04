@@ -1,4 +1,4 @@
-import { UserType } from './../entities/user.entity';
+import { UserType } from '../entities/user.entity';
 export class GetUserDTO {
   id: string;
   username: string;

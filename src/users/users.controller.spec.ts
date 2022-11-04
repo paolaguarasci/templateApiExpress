@@ -4,32 +4,41 @@ import { User, UserType } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { GetUserDTO } from './dto/get-user.dto';
 import { HttpException } from '@nestjs/common';
+import { UserBuilder } from './entities/UserBuilder';
+import { UserDirector } from './entities/UserDirector';
+import { UserListToTest } from '../../test/UserListToTest';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 
 describe('UsersController', () => {
   let controller: UsersController;
   let service: UsersService;
-  const userList: User[] = [
-    new User('1', 'paola-admin', 'PaolettA.85@#', [UserType.ADMIN]),
-    new User('2', 'giuseppe-aditor', 'PaolettA.85@#', [UserType.EDITOR]),
-    new User('3', 'nicola-user', 'PaolettA.85@#', [UserType.BASE]),
-  ];
+
+  const userDirector: UserDirector = new UserDirector();
+  const userBuilder: UserBuilder = new UserBuilder();
+  const userListToTest: UserListToTest = new UserListToTest(
+    userBuilder,
+    userDirector,
+  );
+  let userList: User[];
 
   const userListGetDTO: GetUserDTO[] = [
     new GetUserDTO('1', 'paola-admin', [UserType.ADMIN]),
-    new GetUserDTO('2', 'giuseppe-aditor', [UserType.EDITOR]),
+    new GetUserDTO('2', 'giuseppe-editor', [UserType.EDITOR]),
     new GetUserDTO('3', 'nicola-user', [UserType.BASE]),
   ];
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UsersController],
-      providers: [UsersService],
+      providers: [UsersService, UserBuilder, UserDirector],
     }).compile();
 
     controller = module.get<UsersController>(UsersController);
     service = module.get<UsersService>(UsersService);
+    await service.init();
+    await userListToTest.init();
+    userList = await userListToTest.getUserList();
   });
 
   it('should be defined', () => {
@@ -39,12 +48,12 @@ describe('UsersController', () => {
   describe('findAll', () => {
     it('return all users', async () => {
       jest.spyOn(service, 'findAll').mockImplementation(() => userList);
-      expect(await controller.findAll()).toStrictEqual(userListGetDTO);
+      expect(controller.findAll()).toStrictEqual(userListGetDTO);
     });
 
     it('return 3 users', async () => {
       jest.spyOn(service, 'findAll').mockImplementation(() => userList);
-      expect(await controller.findAll()).toHaveLength(userListGetDTO.length);
+      expect(controller.findAll()).toHaveLength(userListGetDTO.length);
     });
 
     it('call service findAll', async () => {
@@ -78,7 +87,7 @@ describe('UsersController', () => {
 
   describe('create', () => {
     it('call service create', async () => {
-      jest.spyOn(service, 'create').mockReturnValue(userList[0]);
+      jest.spyOn(service, 'create').mockResolvedValue(userList[0]);
       controller.create(new CreateUserDto('paola-admin', 'PaolettA85@#'));
       expect(service.create).toHaveBeenCalledTimes(1);
     });
@@ -87,9 +96,12 @@ describe('UsersController', () => {
       jest.spyOn(service, 'create').mockImplementation(() => {
         throw new Error('User alredy present');
       });
-      expect(() =>
-        controller.create(new CreateUserDto('paola-admin', 'PaolettA.85')),
-      ).toThrowError(HttpException);
+      await expect(
+        async () =>
+          await controller.create(
+            new CreateUserDto('paola-admin', 'PaolettA.85'),
+          ),
+      ).rejects.toThrowError(HttpException);
     });
 
     it('return error message if dto is wrong', async () => {

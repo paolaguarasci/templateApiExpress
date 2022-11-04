@@ -42,14 +42,13 @@ export class UsersController {
 
   @Post()
   @Roles(UserType.ADMIN)
-  create(@Body() createUserDto: CreateUserDto): GetUserDTO {
+  async create(@Body() createUserDto: CreateUserDto): Promise<GetUserDTO> {
     try {
-      return this.mapperUserToDTO(
-        this.usersService.create(
-          createUserDto.username,
-          createUserDto.password,
-        ),
+      const users = await this.usersService.create(
+        createUserDto.username,
+        createUserDto.password,
       );
+      return this.mapperUserToDTO(users);
     } catch (err) {
       throw new HttpException(
         {
@@ -62,16 +61,15 @@ export class UsersController {
   }
 
   @Put(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
-  ): GetUserDTO {
-    return this.mapperUserToDTO(
-      this.usersService.update(id, {
-        username: updateUserDto.username,
-        password: updateUserDto.password,
-      }),
-    );
+  ): Promise<GetUserDTO> {
+    const user = await this.usersService.update(id, {
+      username: updateUserDto.username,
+      password: updateUserDto.password,
+    });
+    return this.mapperUserToDTO(user);
   }
 
   @Delete(':id')

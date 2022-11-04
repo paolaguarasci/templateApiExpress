@@ -4,11 +4,11 @@ export class CreateUserDto {
 
   constructor(username: string, password: string) {
     const trimmedUsername = username.trim();
-    const isAlphanmeric = /^[A-Za-z0-9-]{8,24}$/;
+    const isAlphanumeric = /^[A-Za-z0-9-]{8,24}$/;
     if (
       trimmedUsername.length < 8 ||
       trimmedUsername.length > 24 ||
-      !isAlphanmeric.test(trimmedUsername)
+      !isAlphanumeric.test(trimmedUsername)
     ) {
       throw new Error('Invalid username');
     }
